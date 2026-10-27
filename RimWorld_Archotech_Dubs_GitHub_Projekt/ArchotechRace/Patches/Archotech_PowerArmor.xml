@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="VEF.PatchOperationToggableSequence">
+      <enabled>False</enabled>
+      <label>Toggle Archotech Power Armour spawn</label>
+      <mods>
+      	<li>Archotech PowerArmor</li>
+      </mods>
+      <operations>
+            <li Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="APA_HelmetBase"]/generateCommonality</xpath>
+                <value>
+                  <generateCommonality>50</generateCommonality>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="APA_HelmetBase"]/generateAllowChance</xpath>
+                <value>
+                  <generateAllowChance>50</generateAllowChance>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="APA_ArmorBase"]/generateCommonality</xpath>
+                <value>
+                  <generateCommonality>50</generateCommonality>
+                </value>
+            </li>
+            <li Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="APA_ArmorBase"]/generateAllowChance</xpath>
+                <value>
+                  <generateAllowChance>50</generateAllowChance>
+                </value>
+            </li>
+        </operations>
+  </Operation>
+</Patch>

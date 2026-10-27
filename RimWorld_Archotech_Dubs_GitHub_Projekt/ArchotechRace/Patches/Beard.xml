@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<Operation Class="VEF.PatchOperationToggableSequence">
+      <enabled>False</enabled>
+      <label>Toggle Beard</label>
+      <operations>
+            <li Class="PatchOperationRemove">
+                <xpath>/Defs/AlienRace.ThingDef_AlienRace[defName="Archorace"]/alienRace/styleSettings/li[key="BeardDef"]/value/hasStyle</xpath>
+            </li>
+        </operations>
+    </Operation>
+</Patch>
