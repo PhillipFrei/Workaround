@@ -1,0 +1,41 @@
+name: Build RimWorld 1.6 Dubs Lite workaround
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore NuGet references
+        run: dotnet restore RimWorld_Archotech_Dubs_GitHub_Projekt/DubsLiteAsyncSewageFix/DubsLiteAsyncSewageFix.csproj
+      - name: Compile patch DLL
+        run: dotnet build RimWorld_Archotech_Dubs_GitHub_Projekt/DubsLiteAsyncSewageFix/DubsLiteAsyncSewageFix.csproj --configuration Release --no-restore
+      - name: Assemble installable mod
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="RimWorld_Archotech_Dubs_GitHub_Projekt/DubsLiteAsyncSewageFix"
+          dst="dist/DubsLiteAsyncSewageFix"
+          mkdir -p "$dst/About" "$dst/1.6/Assemblies"
+          cp "$src/About/About.xml" "$dst/About/About.xml"
+          cp "$src/bin/Release/net472/DubsLiteAsyncSewageFix.dll" "$dst/1.6/Assemblies/"
+          test -s "$dst/1.6/Assemblies/DubsLiteAsyncSewageFix.dll"
+      - name: Upload installable mod artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DubsLiteAsyncSewageFix-RW1.6
+          path: dist/DubsLiteAsyncSewageFix/
+          if-no-files-found: error
